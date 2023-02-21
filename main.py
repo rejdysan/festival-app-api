@@ -2,6 +2,7 @@ from typing import Optional
 from fastapi import FastAPI
 from fastapi.params import Body
 from pydantic import BaseModel
+from random import randrange
 
 app = FastAPI()
 
@@ -11,14 +12,15 @@ class Festival(BaseModel):
     includes_food: bool = True
     rating: Optional[int] = None
 
-@app.get("/hello")
-def root():
-    return {"message": "Hello World"}
+my_festivals = []
 
-@app.get("/posts")
-def get_posts():
-    return {"data": "Posts"}
+@app.get("/festivals")
+def get_festivals():
+    return my_festivals
 
-@app.post("/create")
-def create(festival: Festival):
+@app.post("/festivals")
+def create_festival(festival: Festival):
+    festival_dict = festival.dict()
+    festival_dict['id'] = randrange(0, 1000000)
+    my_festivals.append(festival_dict)
     return festival
