@@ -16,7 +16,7 @@ my_festivals = []
 
 @app.get("/festivals")
 def get_festivals():
-    return my_festivals
+    return {"data": my_festivals}
 
 @app.post("/festivals")
 def create_festival(festival: Festival):
